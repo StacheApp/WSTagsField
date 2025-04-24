@@ -36,6 +36,7 @@ open class WSTagView: UIView, UITextInputTraits {
     open var cornerRadius: CGFloat = 3.0 {
         didSet {
             self.layer.cornerRadius = cornerRadius
+            self.layer.cornerCurve = .continuous
             setNeedsDisplay()
         }
     }
