@@ -471,6 +471,14 @@ open class WSTagsField: UIScrollView {
         self.tags.enumerated().reversed().forEach { index, _ in removeTagAtIndex(index) }
     }
 
+    open func tagView(at index: Int) -> WSTagView? {
+        guard index < tagViews.count else {
+            return nil
+        }
+
+        return tagViews[index]
+    }
+
     @discardableResult
     open func tokenizeTextFieldText() -> WSTag? {
         let text = self.textField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
