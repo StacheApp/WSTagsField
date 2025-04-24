@@ -28,17 +28,17 @@ open class WSTagsField: UIScrollView {
     /// Dedicated text field delegate.
     open weak var textDelegate: (any UITextFieldDelegate)?
 
-    /// Background color for tag view in normal (non-selected) state.
-    @IBInspectable open override var tintColor: UIColor! {
-        didSet {
-            tagViews.forEach { $0.tintColor = self.tintColor }
-        }
-    }
-
     /// Text color for tag view in normal (non-selected) state.
     @IBInspectable open var textColor: UIColor? {
         didSet {
             tagViews.forEach { $0.textColor = self.textColor }
+        }
+    }
+
+    /// Background color for tag view in normal (non-selected) state.
+    @IBInspectable open var tagBackgroundColor: UIColor? {
+        didSet {
+            tagViews.forEach { $0.unselectedBackgroundColor = self.tagBackgroundColor }
         }
     }
 
@@ -397,6 +397,7 @@ open class WSTagsField: UIScrollView {
         tagView.textColor = self.textColor
         tagView.selectedColor = self.selectedColor
         tagView.selectedTextColor = self.selectedTextColor
+        tagView.unselectedBackgroundColor = self.tagBackgroundColor
         tagView.displayDelimiter = self.isDelimiterVisible ? self.delimiter : ""
         tagView.cornerRadius = self.cornerRadius
         tagView.borderWidth = self.borderWidth

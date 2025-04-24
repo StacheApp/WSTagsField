@@ -57,7 +57,7 @@ open class WSTagView: UIView, UITextInputTraits {
         }
     }
 
-    open override var tintColor: UIColor! {
+    open var unselectedBackgroundColor: UIColor! {
         didSet { updateContent(animated: false) }
     }
 
@@ -105,7 +105,6 @@ open class WSTagView: UIView, UITextInputTraits {
 
     public init(tag: WSTag) {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = tintColor
         self.layer.cornerRadius = cornerRadius
         self.layer.masksToBounds = true
 
@@ -137,7 +136,7 @@ open class WSTagView: UIView, UITextInputTraits {
     // MARK: - Styling
 
     fileprivate func updateColors() {
-        self.backgroundColor = selected ? selectedColor : tintColor
+        self.backgroundColor = selected ? selectedColor : unselectedBackgroundColor
         textLabel.textColor = selected ? selectedTextColor : textColor
     }
 
