@@ -785,7 +785,7 @@ extension WSTagsField {
     }
 
     fileprivate func updatePlaceholderTextVisibility() {
-        textField.attributedPlaceholder = (placeholderAlwaysVisible || tags.count == 0) ? attributedPlaceholder() : nil
+        textField.attributedPlaceholder = (placeholderAlwaysVisible || tags.isEmpty) ? attributedPlaceholder() : nil
     }
 
     private func attributedPlaceholder() -> NSAttributedString {
@@ -865,7 +865,7 @@ extension WSTagsField: UITextFieldDelegate {
         let pfx = text + string
         let matches = suggestions.filter { caseSensitiveSuggestions ? $0.hasPrefix(pfx) : $0.range(of: pfx, options: [.anchored, .caseInsensitive]) != nil }
         
-        if matches.count > 0 {
+        if !matches.isEmpty {
             textField.text = matches[0]
             
             if let start = textField.position(from: textField.beginningOfDocument, offset: pfx.count) {
