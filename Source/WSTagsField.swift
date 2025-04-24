@@ -26,7 +26,7 @@ open class WSTagsField: UIScrollView {
     public let textField = BackspaceDetectingTextField()
 
     /// Dedicated text field delegate.
-    open weak var textDelegate: UITextFieldDelegate?
+    open weak var textDelegate: (any UITextFieldDelegate)?
 
     /// Background color for tag view in normal (non-selected) state.
     @IBInspectable open override var tintColor: UIColor! {
