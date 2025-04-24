@@ -117,6 +117,8 @@ open class WSTagView: UIView, UITextInputTraits {
         textLabel.font = font
         textLabel.textColor = .white
         textLabel.backgroundColor = .clear
+        textLabel.accessibilityLabel = tag.accessibilityLabel
+        textLabel.accessibilityHint = tag.accessibilityHint
         addSubview(textLabel)
 
         self.displayText = tag.text
