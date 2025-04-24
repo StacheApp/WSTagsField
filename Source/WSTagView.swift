@@ -216,7 +216,10 @@ open class WSTagView: UIView, UITextInputTraits {
 
     open override func becomeFirstResponder() -> Bool {
         let didBecomeFirstResponder = super.becomeFirstResponder()
-        selected = true
+        // Had to disable this line to fix an infinite loop on Mac. becomeFirstResponder setting selected to true calls selected didSet, which calls becomeFirstResponder if selected && !isFirstResponder.
+        if didBecomeFirstResponder {
+            selected = true
+        }
         return didBecomeFirstResponder
     }
 
