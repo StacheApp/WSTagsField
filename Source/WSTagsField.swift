@@ -871,6 +871,10 @@ extension WSTagsField: UITextFieldDelegate {
             
             if let start = textField.position(from: textField.beginningOfDocument, offset: pfx.count) {
                 textField.selectedTextRange = textField.textRange(from: start, to: textField.endOfDocument)
+
+                // Text field has been programmatically updated, so onTextFieldDidChange needs to be called. We call it with the prefix and not the completion
+                onDidChangeText?(self, pfx)
+
                 return true
             }
         }
