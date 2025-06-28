@@ -603,18 +603,9 @@ extension WSTagsField {
         set { textField.enablesReturnKeyAutomatically = newValue }
     }
 
-    public func setText(_ text: String) {
-        self.text = text
-
-        // Update autocompletion state after setting text
-        autoCompleteText(for: textField)
-    }
-
-    public private(set) var text: String? {
+    public var text: String? {
         get { return textField.text }
-        set {
-            textField.text = newValue
-        }
+        set { textField.text = newValue }
     }
 
     @available(*, deprecated, message: "Use 'inputFieldAccessoryView' instead")
@@ -864,23 +855,7 @@ extension WSTagsField: UITextFieldDelegate {
         }
         return !autoCompleteText(for: textField, using: string)
     }
-
-    private func autoCompleteText(for textField: UITextField) {
-        guard let text = textField.text, !text.isEmpty else {
-            return
-        }
-
-        let matches = suggestions.filter { caseSensitiveSuggestions ? $0.hasPrefix(text) : $0.range(of: text, options: [.anchored, .caseInsensitive]) != nil }
-
-        if !matches.isEmpty {
-            textField.text = matches[0]
-
-            if let start = textField.position(from: textField.beginningOfDocument, offset: text.count) {
-                textField.selectedTextRange = textField.textRange(from: start, to: textField.endOfDocument)
-            }
-        }
-    }
-
+    
     private func autoCompleteText(for textField: UITextField, using string: String) -> Bool {
         guard !string.isEmpty,
               let selectedTextRange = textField.selectedTextRange,
