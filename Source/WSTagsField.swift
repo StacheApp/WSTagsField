@@ -368,6 +368,38 @@ open class WSTagsField: UIScrollView {
         self.textField.reloadInputViews()
     }
 
+    open func truncate(tags: [String], to maxNumberOfLines: Int) -> [String] {
+        var result = [String]()
+
+        let maxWidth: CGFloat = bounds.width - contentInset.left - contentInset.right
+        var currentLineX = 0.0
+        var currentLine = 1
+
+        let tagView = WSTagView(tag: .init(""))
+
+        for tag in tags {
+            tagView.displayText = tag
+
+            // WSTagView's intrinsic content size includes margins, so they don't have to be accounted for separately
+            let tagSize = tagView.sizeThatFits(CGSize(width: .max, height: .max))
+
+            if currentLineX + tagSize.width > maxWidth {
+                guard currentLine < maxNumberOfLines else {
+                    return result
+                }
+
+                currentLine += 1
+                currentLineX = tagSize.width
+                result.append(tag)
+            } else {
+                result.append(tag)
+                currentLineX += tagSize.width
+            }
+        }
+
+        return result
+    }
+
     // MARK: - Adding / Removing Tags
     open func addTags(_ tags: [String]) {
         tags.forEach { addTag($0) }
