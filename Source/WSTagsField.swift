@@ -866,19 +866,23 @@ extension WSTagsField: UITextFieldDelegate {
         let pfx = text + string
         let matches = suggestions.filter { caseSensitiveSuggestions ? $0.hasPrefix(pfx) : $0.range(of: pfx, options: [.anchored, .caseInsensitive]) != nil }
         
-        if !matches.isEmpty {
-            textField.text = matches[0]
-            
-            if let start = textField.position(from: textField.beginningOfDocument, offset: pfx.count) {
+        guard let match = matches.first else {
+            return false
+        }
+
+        DispatchQueue.main.async { [weak self, weak textField] in
+            guard let self, let textField else {
+                return
+            }
+
+            textField.text = match
+
+            if let start = textField.position(from: textField.beginningOfDocument, offset: pfx.utf16.count) {
                 textField.selectedTextRange = textField.textRange(from: start, to: textField.endOfDocument)
-
-                // Text field has been programmatically updated, so onTextFieldDidChange needs to be called. We call it with the prefix and not the completion
-                onDidChangeText?(self, pfx)
-
-                return true
             }
         }
-        return false
+
+        return true
     }
 
 }
