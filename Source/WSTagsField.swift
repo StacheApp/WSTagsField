@@ -880,6 +880,8 @@ extension WSTagsField: UITextFieldDelegate {
             if let start = textField.position(from: textField.beginningOfDocument, offset: pfx.utf16.count) {
                 textField.selectedTextRange = textField.textRange(from: start, to: textField.endOfDocument)
             }
+
+            self.onDidChangeText?(self, pfx)
         }
 
         return true
